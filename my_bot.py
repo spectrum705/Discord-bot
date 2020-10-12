@@ -4,6 +4,7 @@ from discord.ext.commands import Bot
 from discord import Game
 
 from discord.ext import commands
+import subprocess
 
 
 
@@ -45,9 +46,19 @@ class MyClient(discord.Client):
         elif "i'm new"  in message.content.lower() or "i am new"  in message.content.lower():
             await message.channel.send('Hello and welcome to the SERVER :)')
 
-       
-           
-     
+def run(*args):
+
+	return subprocess.check_call(['git'] + list(args))
+
+
+def commit():
+
+	message = input("\nType in your commit message: ")
+	commit_message = f'{message}'
+
+	run("commit", "-am", commit_message)
+	run("push", "-u", "origin", "master")
+
 if __name__ == '__main__':
     client = MyClient()
     @client.event
@@ -56,4 +67,4 @@ if __name__ == '__main__':
         print('Bot Is Ready')
         
     client.run(BOT_TOKEN)  
-
+    
